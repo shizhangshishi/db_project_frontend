@@ -13,13 +13,11 @@
                             <v-radio label="head_nurse" :value="HEAD_NURSE"></v-radio>
                             <v-radio label="ward_nurse" :value="WARD_NURSE"></v-radio>
                         </v-radio-group>
-                        <v-radio-group v-model="selectedRegion" prepend-icon="mdi-hospital"
-                                       :rules="[() => !!selectedRegion || 'region is required']">
+                        <v-radio-group v-model="selectedRegion" prepend-icon="mdi-hospital">
                             <v-label>select region</v-label>
                             <v-radio label="mild" :value="MILD" selected></v-radio>
                             <v-radio label="serve" :value="SERVER"></v-radio>
                             <v-radio label="critical" :value="CRITICAL"></v-radio>
-                            <v-radio label="any" :value="ANY"></v-radio>
                         </v-radio-group>
                     </v-form>
                 </v-card-text>
@@ -81,7 +79,6 @@
                 MILD: constant.MILD,
                 SERVER: constant.SEVERE,
                 CRITICAL:constant.CRITICAL,
-                ANY:constant.ANY
             }
         },
         methods: {
