@@ -51,7 +51,6 @@
     },
     mounted(){
       this.setMessages();
-      // this.messages = messages_fake.HEAD_MSG;
     },
     methods:{
       setMessages(){
@@ -60,7 +59,7 @@
                 .then(res => {
                   if (res.status === 200) {
                     this.messages = res.data.messages;
-                    this.app.message('Get my messages.js successfully', 'success');
+                    this.app.message('Get my messages successfully', 'success');
                   } else {
                     this.app.message('Fail to get my messages', 'error');
                   }

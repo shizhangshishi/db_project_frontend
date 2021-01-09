@@ -12,11 +12,11 @@ export default new Vuex.Store({
     themeIsDark: localStorage.getItem('theme') === 'dark'
   },
   mutations: {
-    updateToken(state, data) {
-      localStorage.removeItem('token');
-      localStorage.setItem('token', data.token);
-      state.token = data.token;
-    },
+    // updateToken(state, data) {
+    //   localStorage.removeItem('token');
+    //   localStorage.setItem('token', data.token);
+    //   state.token = data.token;
+    // },
     login(state, token) {
       localStorage.setItem('token', token);
       state.token = token;

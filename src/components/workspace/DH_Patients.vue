@@ -13,6 +13,7 @@
                        <v-radio label="treated" :value="TREATED"></v-radio>
                        <v-radio label="cured" :value="CURED"></v-radio>
                        <v-radio label="died" :value="DIED"></v-radio>
+                       <v-radio label="any" :value="ANY"></v-radio>
                    </v-radio-group>
                 </v-card-text>
                 <v-card-actions>
@@ -66,7 +67,8 @@
                 showState:false,
                 CURED: constant.CURED,
                 TREATED: constant.TREATED,
-                DIED: constant.DIED
+                DIED: constant.DIED,
+                ANY:constant.ANY
             }
         },
         computed:{
@@ -83,6 +85,9 @@
                     return "black";
             }
         },
+        mounted(){
+          this.getAllPatients();
+        },
         methods:{
             getAllPatients(){
                 this.transfer = false;
@@ -92,10 +97,15 @@
                     state:this.state
                 }).
                     then(res =>{
-                        if (res.status === 200){
-                            this.patients = res.data.patients;
+                        if (res.status === 200 && res.data.patients.length !==0){
                             this.app.message('Get patients successfully','success');
                             this.showState=false;
+                            this.patients = res.data.patients;
+                        }
+                        else if (res.status === 200 && res.data.patients.length===0){
+                            this.app.message('There is no patient for this state','warning');
+                            this.showState=false;
+                            this.patients = res.data.patients;
                         }
                         else {
                             this.app.message('Fail to get patients','error');
@@ -114,9 +124,13 @@
                     this.app.overlay = true;
                     this.$axios.get('/user/medic/patients/canTransfer').
                     then(res =>{
-                        if (res.status === 200){
+                        if (res.status === 200&& res.data.patients.length!==0){
                             this.patients = res.data.patients;
                             this.app.message('Get canTransfer patients successfully','success');
+                        }
+                        else if (res.status === 200 && res.data.patients.length===0){
+                            this.app.message('There is no canTransfer patient','warning');
+                            this.patients = res.data.patients;
                         }
                         else {
                             this.app.message('Fail to get canTransfer patients','error');
@@ -128,9 +142,6 @@
                         this.app.overlay = false;
                     });
                 }
-                else {
-                    this.getAllPatients();
-                }
             },
             getDischargePatients(){
                 this.transfer = false;
@@ -139,9 +150,13 @@
                     this.app.overlay = true;
                     this.$axios.get('/user/medic/patients/canDischarge').
                     then(res =>{
-                        if (res.status === 200){
+                        if (res.status === 200&& res.data.patients.length!==0){
                             this.patients = res.data.patients;
                             this.app.message('Get canDischarge patients successfully','success');
+                        }
+                        else if (res.status === 200 && res.data.patients.length===0){
+                            this.app.message('There is no canDischarge patient','warning');
+                            this.patients = res.data.patients;
                         }
                         else {
                             this.app.message('Fail to get canDischarge patients','error');
@@ -152,9 +167,6 @@
                     }).finally(() => {
                         this.app.overlay = false;
                     });
-                }
-                else {
-                    this.getAllPatients();
                 }
             },
             close(){

@@ -32,27 +32,27 @@
         this.snackbarMessage = message;
         this.snackbarType = type;
       },
-      updateToken() {
-        if (this.$store.state.token) {
-          this.$axios.post('/update')
-            .then(res => {
-              if (res.status === 200 && res.data.token) {
-                this.$store.commit('updateToken', res.data);
-              }
-            })
-            .catch(error => {
-              if (error.message === 'expired') {
-                this.message("login status has expired", 'warning');
-              }
-            });
-        }
-        setTimeout(() => {
-          this.updateToken();
-        }, 10000000)
-      }
+      // updateToken() {
+      //   if (this.$store.state.token) {
+      //     this.$axios.post('/update')
+      //       .then(res => {
+      //         if (res.status === 200 && res.data.token) {
+      //           this.$store.commit('updateToken', res.data);
+      //         }
+      //       })
+      //       .catch(error => {
+      //         if (error.message === 'expired') {
+      //           this.message("login status has expired", 'warning');
+      //         }
+      //       });
+      //   }
+      //   setTimeout(() => {
+      //     this.updateToken();
+      //   }, 10000000)
+      // }
     },
     mounted() {
-      this.updateToken();
+      // this.updateToken();
     }
   };
 </script>
