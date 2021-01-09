@@ -29,6 +29,19 @@
                             </v-card-actions>
                         </v-card>
                     </v-col>
+                    <!--查看病房和病床-->
+                    <v-col cols="12" md="6">
+                        <v-card>
+                            <v-card-title>Check Wards And Beds</v-card-title>
+                            <v-card-subtitle>
+                                Check wars and beds with corresponding patients.
+                            </v-card-subtitle>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="primary" @click="showWards=true">Check</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-col>
                 </v-row>
             </v-col>
         </v-row>
@@ -65,6 +78,31 @@
                 </v-row>
             </v-col>
         </v-row>
+        <v-row justify="center" align="center" v-if="showWards">
+            <v-col cols="10">
+                <v-row>
+                    <v-col cols="24" md="12">
+                        <v-card>
+                            <v-card-title>
+                                <v-col cols="20">
+                                    Wards
+                                </v-col>
+                                <v-col cols="4">
+                                    <v-btn color="red" text @click="showWards=false">Close</v-btn>
+                                </v-col>
+                            </v-card-title>
+                            <v-card-text>
+                               <Wards></Wards>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                            </v-card-actions>
+                        </v-card>
+
+                    </v-col>
+                </v-row>
+            </v-col>
+        </v-row>
     </div>
 </template>
 
@@ -73,15 +111,18 @@
 
     import constant from "../../../config/constant"
     import DH_Patients from "../DH_Patients";
+    import Wards from "./Wards";
     export default {
         name: "HeadControl",
-        components: {DH_Patients, WardNurses},
+        components: {Wards, DH_Patients, WardNurses},
         data(){
             return{
                 showWardNurses:false,
                 showSelectDialog:false,
                 showPatients: false,
+                showWards:false,
                 patients:[],
+                wards:[],
                 profession: constant.HEAD_NURSE
             }
         },
