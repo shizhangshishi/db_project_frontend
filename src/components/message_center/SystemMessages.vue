@@ -7,9 +7,6 @@
             <h3 class="title font-weight-light text-center grow">
               Timeline
             </h3>
-            <v-avatar>
-              <v-img src="https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"></v-img>
-            </v-avatar>
           </v-card-title>
         </v-card>
         <v-card-text class="py-0">
@@ -30,6 +27,7 @@
                   <div class="caption">
                     {{msg.content}}
                   </div>
+                  <v-btn text color="primary" @click="checkPatient(msg.patientId)">Check Patient</v-btn>
                 </v-col>
               </v-row>
             </v-timeline-item>
@@ -52,19 +50,19 @@
       }
     },
     mounted(){
-      // this.setMessages();
-      this.messages = messages_fake.HEAD_MSG;
+      this.setMessages();
+      // this.messages = messages_fake.HEAD_MSG;
     },
     methods:{
       setMessages(){
         this.app.overlay = true;
-        this.$axios.get('/user/medic/messages.js')
+        this.$axios.get('/user/medic/messages')
                 .then(res => {
                   if (res.status === 200) {
                     this.messages = res.data.messages;
                     this.app.message('Get my messages.js successfully', 'success');
                   } else {
-                    this.app.message('Fail to get my messages.js', 'error');
+                    this.app.message('Fail to get my messages', 'error');
                   }
                 })
                 .catch(error => {
@@ -74,6 +72,10 @@
                 .finally(() => {
                   this.app.overlay = false;
                 });
+      },
+      checkPatient(id){
+        let url = '/patient/' + id;
+        window.open(url, '_blank');
       }
     },
     computed: {

@@ -1,30 +1,7 @@
 <template>
   <div id="navigation">
     <v-dialog v-model="showProfile" overlay-opacity="0.9" max-width="500px" v-if="isUser">
-      <v-card shaped>
-        <v-card-title class="headline">My Profile</v-card-title>
-        <v-divider></v-divider>
-        <v-card-text>
-          <v-container fluid>
-            <v-row>
-              <v-col cols="12" md="4"><b>Username:</b></v-col>
-              <v-col>{{$store.state.profile.username}}</v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" md="4"><b>Gender:</b></v-col>
-              <v-col>{{$store.state.profile.gender}}</v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" md="4"><b>Profession:</b></v-col>
-              <v-col>{{$store.state.profile.medic ? $store.state.profile.medic.profession : "null"}}</v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" md="4"><b>Region:</b></v-col>
-              <v-col>{{$store.state.profile.medic ? $store.state.profile.medic.region : "null"}}</v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-      </v-card>
+      <profile :showProfile.sync="showProfile"></profile>
     </v-dialog>
     <v-dialog v-model="confirmLogout" overlay-opacity="0.9" width="300px">
       <v-card shaped :color="whiteOpacity">
@@ -105,8 +82,10 @@
 </template>
 
 <script>
+  import Profile from "./profile/Profile";
   export default {
     name: 'Navigation',
+    components: {Profile},
     props: {
       items: {},
       showDrawer: {
